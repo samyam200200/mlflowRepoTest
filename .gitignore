@@ -1,3 +1,5 @@
 mlruns/
 /*.json
 dev.env
+postgres-data/
+mlflow/

@@ -1,0 +1,44 @@
+services:
+  database:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=imageDB
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5430:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - 5001:8080
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+
+  nginx:
+    build: .
+    ports:
+      - "2001:80"
+      - "2002:81"
+    depends_on:
+      - app
+
+  mlflow:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    volumes:
+      - ./mlflow:/mlflow

@@ -1,2 +1,4 @@
-google-cloud-storage==1.26.0
-mlflow==1.10.0
+fastapi
+mlflow==1.30.0
+uvicorn
+psycopg2-binary
